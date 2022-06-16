@@ -1,0 +1,53 @@
+create user 'Rising'identified by 'tauksik';
+grant all privileges on *.* to 'Rising' with grant option;
+create database tauksik_insurance;
+use tauksik_insurance;
+show tables;
+
+create table person(driver_id char(10) primary key , name varchar(25), address varchar(50));
+create table car(regno char(10) primary key, model varchar(25), year_p int(4));
+create table owns(driver_id char(10) , regno char(10), primary key(driver_id, regno), foreign key(driver_id) references person(driver_id) on delete cascade, foreign key(regno) references car(regno) on delete cascade);
+create table accident(report_no int(10) primary key, date_no date, location varchar(20));
+create table participation(driver_id char(10), regno char(10), report_no int, damage_amt varchar(10), primary key(driver_id,regno,report_no), foreign key(driver_id) references person(driver_id) on delete cascade,foreign key(regno) references car(regno) on delete cascade, foreign key(report_no) references accident(report_no) on delete cascade);
+desc person; 
+
+insert into person values('ka01','max','california');
+insert into person values('ka02','scott','las vegas');
+insert into person values('ka03','lexi','new york city');
+insert into person values('ka04','matt','los angles');
+insert into person values('ka05','brent','bahamas');
+
+insert into car values('ma2039','Mustang','2014');
+insert into car values('ma3039','R8','2019');
+insert into car values('mw5686','GLC','2020');
+insert into car values('mn5496','Veyron','2021');
+insert into car values('mk8453','Jeep','2020');
+insert into car values('mv3645','GTR','2012');
+
+select * from person;
+select * from car;
+
+insert into owns values('ka01','ma2039');
+insert into owns values('ka01','ma3039');
+insert into owns values('ka02','mw5686');
+insert into owns values('ka03','mn5496');
+insert into owns values('ka04','mk8453');
+insert into owns values('ka05','mv3645');
+select * from owns;
+
+insert into accident values('001','2022-05-23','bahamas');
+insert into accident values('002','2022-06-25','California');
+insert into accident values('003','2022-11-11','las vegas');
+insert into accident values('004','2022-07-12','las vegas');
+insert into accident values('005','2022-08-30','los angles');
+insert into accident values('006','2022-02-02','New york city');
+select * from accident; 
+desc accident;
+delete from accident where report_no ='002';
+insert into participation values('ka01','ma2039','001','5000');
+insert into participation values('ka01','ma3039','002','4500');
+insert into participation values('ka02','mw5686','003','7640');
+insert into participation values('ka03','mn5496','004','5850');
+insert into participation values('ka04','mk8453','005','9000');
+insert into participation values('ka05','mv3645','006','10000');
+select * from participation;
