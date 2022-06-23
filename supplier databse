@@ -1,0 +1,24 @@
+create database t_supplier;
+use t_supplier;
+ create table suppliers(sid int primary key, sname varchar(25) ,address varchar(25));
+create table parts(pid int primary key, pname varchar(20), color char(5));
+create table catalog(sid int , pid int, cost real, primary key(sid,pid), foreign key (sid) references suppliers(sid), foreign key (pid) references parts (pid));
+insert into suppliers values(1001, 'mark','egypt');
+insert into suppliers values(1002, 'steve','brooklyn');
+insert into suppliers values(1003, 'tony','newyork');
+insert into suppliers values(1004, 'jake','asgard');
+insert into suppliers values(1005, 'peter','queens');
+insert into parts values(20001,'book', 'red');
+insert into parts values(20002,'pen', 'red');
+insert into parts values(20003,'pencil', 'green');
+insert into parts values(20004,'mobile', 'green');
+insert into parts values(20005,'charger', 'black');
+desc catalog;
+select * from catalog;
+insert into catalog values(1001, 20001, 10);
+insert into catalog values(1001, 20002, 20);
+insert into catalog values(1002, 20003, 30);
+insert into catalog values(1003, 20004, 40);
+insert into catalog values(1004, 20005, 50);
+insert into catalog values(1005, 20004, 10);
+select distinct a.pname from parts
